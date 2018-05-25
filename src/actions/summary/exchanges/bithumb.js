@@ -1,7 +1,6 @@
 
 import request from 'request-promise'
 import CryptoJS from 'crypto-js'
-import querystring from 'querystring'
 
 const baseUrl = 'https://api.bithumb.com'
 

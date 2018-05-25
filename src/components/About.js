@@ -28,7 +28,7 @@ const About = () => (
       )}
     </ul>
     <p />
-    github - https://github.com/dbin318/cryptobalance
+    github - <a href='https://github.com/dbin318/cryptobalance' target='_blank'>https://github.com/dbin318/cryptobalance</a>
   </Fragment>
 )
 
