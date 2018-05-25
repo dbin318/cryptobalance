@@ -1,4 +1,5 @@
 
+### goals
 Cryptobalance is a chrome extension for showing the balance of crypto exchanges and wallets.
 
 The supported crypto exchanges are
@@ -12,10 +13,10 @@ The supported crypto exchanges are
 The supported crypto wallets are
   - ethereum(by etherscan)
 
-<p> build
+### build
 ```
 $ npm run build
 ```
 
-<p> install
-build directory  
+### install
+after build, add build directory as a chrome extension.
