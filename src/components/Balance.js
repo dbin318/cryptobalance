@@ -65,6 +65,11 @@ class Balance extends Component {
               </Panel.Body>
             </Panel>
             {Object.entries(summary)
+              .sort(([currency1, cryptoPlaces1], [currency2, cryptoPlaces2]) => {
+                const a = cryptoPlaces1 && cryptoPlaces1.total && cryptoPlaces1.total.price || 0
+                const b = cryptoPlaces2 && cryptoPlaces2.total && cryptoPlaces2.total.price || 0
+                return b - a
+              })
               .map(([currency, cryptoPlaces]) => (
                 currency !== 'total' &&
                   <Panel bsStyle='success'>
