@@ -23,6 +23,7 @@
     "https://api.korbit.co.kr/*",
     "https://crix-api.upbit.com/*",
     "https://api.etherscan.io/*",
+    "https://www.koreaexim.go.kr/*",
     "storage"
   ],
   "file_handlers": {

@@ -28,7 +28,7 @@ const About = () => (
       )}
     </ul>
     <p />
-    github -
+    github - https://github.com/dbin318/cryptobalance
   </Fragment>
 )
 

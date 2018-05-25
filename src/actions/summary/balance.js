@@ -23,7 +23,7 @@ import { inspect } from 'util'
  *  }
  * }
  */
-async function getBalances(configObject) {
+async function getBalances(configObject = {}) {
   const supportedCryptoPlaces = Object.entries(exchanges).concat(Object.entries(wallets))
 
   const cryptoPlaces = supportedCryptoPlaces.filter(([ name, cryptoPlace ]) => configObject[name])
@@ -73,9 +73,11 @@ async function getBalances(configObject) {
  *  }
  * }
  */
-async function getTickers(configObject, currencies, fiatCurrencies) {
+async function getTickers(configObject = {}, currencies, fiatCurrencies) {
   const myExchanges = Object.entries(exchanges)
     .filter(([ name, exchange ]) => configObject[name])
+
+  if (myExchanges.length === 0) return {}
 
   const prices = await Promise.all(
       myExchanges.map(([ name, exchange ]) => exchange.ticker(currencies, fiatCurrencies).catch(err => {
@@ -211,7 +213,8 @@ export async function getSummary(fiatCurrencies) {
     .reduce((prev, [ currency, { total: { price = 0, amount = 0 } }]) =>
       prev + price * amount,
     0)
-  result.total = total
+  if (total > 0) result.total = total
+
   return result
 }
 

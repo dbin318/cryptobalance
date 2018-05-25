@@ -41,7 +41,10 @@ class Balance extends Component {
           </div>
         }
         {summaryType !== BEGIN_SUMMARY && summaryType !== ERROR_SUMMARY && isSummaryEmpty &&
-            <h2><Label> 설정된 연결 정보가 없습니다. </Label></h2>
+          <Fragment>
+            <h2>설정된 연결 정보가 없습니다. </h2>
+            <Link to='/settings/create'>설정 추가</Link>
+          </Fragment>
         }
 
         {summaryType !== BEGIN_SUMMARY && summaryType !== ERROR_SUMMARY && !isSummaryEmpty &&
