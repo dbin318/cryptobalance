@@ -20,3 +20,7 @@ $ npm run build
 
 ### install
 after build, add build directory as a chrome extension.
+
+### user guide
+  - add api key and api secret to fetch the exchanges or wallets.
+  - As you can see manifest.json permissions, I guarantee that I do not get your api key information.
