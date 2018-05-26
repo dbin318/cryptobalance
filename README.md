@@ -19,7 +19,11 @@ $ npm run build
 ```
 
 ### install
-after build, add build directory as a chrome extension.
+- from source
+  after build, add build directory as a chrome extension.
+- from chrome store
+  https://chrome.google.com/webstore/detail/crypto-balance/odkgaibemhfnaiogdfbdcldaobbiclcc
+
 
 ### user guide
   - add api key and api secret to fetch the exchanges or wallets.
