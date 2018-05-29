@@ -1,8 +1,10 @@
 
 import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { PageHeader, ButtonGroup, Button, Navbar, Nav, NavItem } from 'react-bootstrap'
 import { withRouter } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 class Header extends Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class Header extends Component {
   }
 
   render() {
+
     return (
       <Navbar>
         <Navbar.Header>
@@ -23,13 +26,13 @@ class Header extends Component {
         </Navbar.Header>
         <Nav bsStyle='pills' activeKey={this.state.index} onSelect={index => this.onChange(index)}>
           <NavItem eventKey={1}>
-            Balance
+            <FormattedMessage id='header.balance' />
           </NavItem>
           <NavItem eventKey={2}>
-            Settings
+            <FormattedMessage id='header.settings' />
           </NavItem>
           <NavItem eventKey={3}>
-            About
+            <FormattedMessage id='header.about' />
           </NavItem>
         </Nav>
       </Navbar>

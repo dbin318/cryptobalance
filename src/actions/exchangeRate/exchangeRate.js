@@ -24,8 +24,8 @@ const apiKey = '0BgMJQwatoqRxc2GFDclklPIWFF5RpUv'
  * get today exchange rate
  * usd only
  *
- * @return { YYYYMMDD: { usd: 1070 } }
- * { YYYYMMDD: { usd: -1 } } if the exchange rate is unavailable
+ * @return { date: YYYYMMDD, usd: 1070 }
+ * { date: YYYYMMDD, usd: -1  } if the exchange rate is unavailable
  */
 export async function getExchangeRate() {
   const url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON'

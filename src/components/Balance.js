@@ -7,6 +7,7 @@ import { fetchSummary } from '../actions/summary'
 import { exchanges, wallets } from '../actions/summary/storage'
 import { BEGIN_SUMMARY, ERROR_SUMMARY } from '../actions/summary'
 import { Link } from 'react-router-dom'
+import { FormattedMessage, FormattedRelative, FormattedNumber, FormattedDate } from 'react-intl'
 
 const cryptoPlaceNames = ['total'].concat(Object.keys(Object.assign({}, exchanges, wallets)))
 
@@ -27,32 +28,37 @@ class Balance extends Component {
     return (
       <Fragment>
         <ButtonGroup>
-          <Button onClick={fetchSummary}>갱신</Button>
+          <Button onClick={fetchSummary}>
+            <FormattedMessage id='balance.refresh' />
+          </Button>
         </ButtonGroup>
 
         {summaryType === BEGIN_SUMMARY &&
-          <div>
-            loading...
-          </div>
+          <p>
+            <FormattedMessage id='balance.loading'/>
+          </p>
         }
         {summaryType === ERROR_SUMMARY &&
-          <div>
-            loading errors
-          </div>
+          <p>
+            <FormattedMessage id='balance.loading-errors'/>
+          </p>
         }
         {summaryType !== BEGIN_SUMMARY && summaryType !== ERROR_SUMMARY && isSummaryEmpty &&
           <Fragment>
-            <h2>설정된 연결 정보가 없습니다. </h2>
-            <Link to='/settings/create'>설정 추가</Link>
+            <h2><FormattedMessage id='balance.no-settings' /></h2>
+            <Link to='/settings/create'><FormattedMessage id='balance.create-settings' /></Link>
           </Fragment>
         }
 
         {summaryType !== BEGIN_SUMMARY && summaryType !== ERROR_SUMMARY && !isSummaryEmpty &&
           <Fragment>
             <p/>
-            last updated : {new Date(updated).toLocaleString()}
+            <FormattedMessage id='balance.last-updated'/> : <FormattedRelative value={new Date(updated)}/>
             {date &&
-              <p> exchange rate : {parseInt(usd).toLocaleString()}원 ( {`${date.substring(0, 4)}.${date.substring(4,6)}.${date.substring(6,8)}`} )</p>
+              <p> exchange rate :
+                <FormattedNumber value={usd} style='currency' currency='KRW'/>
+                <FormattedDate value={date}/>
+              </p>
             }
             <Panel bsStyle='primary'>
               <Panel.Heading>
@@ -61,7 +67,7 @@ class Balance extends Component {
                 </Panel.Title>
               </Panel.Heading>
               <Panel.Body>
-                {parseInt(summary.total).toLocaleString()}원
+                <FormattedNumber value={summary.total} style='currency' currency='KRW'/>
               </Panel.Body>
             </Panel>
             {Object.entries(summary)
@@ -80,7 +86,7 @@ class Balance extends Component {
                     </Panel.Heading>
                     <Panel.Body>
                       {cryptoPlaces.total && cryptoPlaces.total.price &&
-                        `${Math.round(cryptoPlaces.total.price * (cryptoPlaces.total.amount || 0)).toLocaleString()}원`
+                        <FormattedNumber value={Math.round(cryptoPlaces.total.price * (cryptoPlaces.total.amount || 0))} style='currency' currency='KRW'/>
                       }
                     </Panel.Body>
                     <Table striped bordered condensed hover>
@@ -91,12 +97,12 @@ class Balance extends Component {
                             <td>{amount || 0}</td>
                             <td>
                               {price &&
-                                `${Math.round(price).toLocaleString()}원`
+                                <FormattedNumber value={Math.round(price)} style='currency' currency='KRW'/>
                               }
                             </td>
                             <td>
                               {price &&
-                                `${Math.round(price * (amount || 0)).toLocaleString()}원`
+                                <FormattedNumber value={Math.round(price * (amount || 0))} style='currency' currency='KRW'/>
                               }
                             </td>
                           </tr>

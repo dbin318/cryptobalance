@@ -9,6 +9,7 @@ import { withRouter, Link } from 'react-router-dom'
 import CreateSettings from './CreateSettings'
 import { connect } from 'react-redux'
 import { pushConfig } from '../../actions/config'
+import { FormattedMessage } from 'react-intl'
 
 class Settings extends Component {
   constructor (props) {
@@ -22,9 +23,9 @@ class Settings extends Component {
     return (
       <Fragment>
         <ButtonGroup>
-          <Button><Link to='/settings/create'>Add</Link></Button>
-          <Button><Link to='/settings/export'>Export</Link></Button>
-          <Button><Link to='/settings/import'>Import</Link></Button>
+          <Button><Link to='/settings/create'><FormattedMessage id='settings.add'/></Link></Button>
+          <Button><Link to='/settings/export'><FormattedMessage id='settings.export'/></Link></Button>
+          <Button><Link to='/settings/import'><FormattedMessage id='settings.import'/></Link></Button>
         </ButtonGroup>
 
         {cryptoPlaces &&
@@ -37,8 +38,8 @@ class Settings extends Component {
               </Panel.Heading>
               <Panel.Body>
                 <ButtonGroup>
-                  <Button onClick={onUpdate.bind(this, name)}>수정</Button>
-                  <Button onClick={onDelete.bind(this, name)}>삭제</Button>
+                  <Button onClick={onUpdate.bind(this, name)}><FormattedMessage id='settings.update'/></Button>
+                  <Button onClick={onDelete.bind(this, name)}><FormattedMessage id='settings.delete'/></Button>
                 </ButtonGroup>
               </Panel.Body>
               {config &&
