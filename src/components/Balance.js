@@ -55,9 +55,9 @@ class Balance extends Component {
             <p/>
             <FormattedMessage id='balance.last-updated'/> : <FormattedRelative value={new Date(updated)}/>
             {date &&
-              <p> exchange rate :
+              <p>  <FormattedMessage id='balance.exchange-rate' /> :
                 <FormattedNumber value={usd} style='currency' currency='KRW'/>
-                <FormattedDate value={date}/>
+                ( <FormattedDate value={date}/> )
               </p>
             }
             <Panel bsStyle='primary'>

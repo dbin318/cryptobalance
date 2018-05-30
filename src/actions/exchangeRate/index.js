@@ -25,7 +25,10 @@ export function fetchExchangeRate() {
 
       if (!exchangeRate.date || exchangeRate.usd === -1) {
         // default if empty
-        exchangeRate = { date: new Date(2018, 5, 20), usd: 1080 }
+        exchangeRate = {
+          date: new Date(2018, 4, 20), // 20 May 2018
+          usd: 1080
+        }
       }
       dispatch(createExchangeRateAction({
         updated: Date.now(),

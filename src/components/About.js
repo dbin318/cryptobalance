@@ -4,13 +4,14 @@ import { ButtonGroup, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Header from './Header'
 import { exchanges, wallets } from '../actions/summary/storage'
+import { FormattedMessage } from 'react-intl'
 
 const About = () => (
   <Fragment>
     <p />
-      Cryptobalance accumulates the balance of crypto exchanges and wallets in real-time.
+      <FormattedMessage id='about.description' />
     <p />
-      supported exchanges
+      <FormattedMessage id='about.supported-exchanges' />
     <ul>
       {Object.keys(exchanges).map(exchange =>
         <li>
@@ -19,7 +20,7 @@ const About = () => (
       )}
     </ul>
     <p />
-      supported wallets
+    <FormattedMessage id='about.supported-wallets' />
     <ul>
       {Object.keys(wallets).map(wallet =>
         <li>

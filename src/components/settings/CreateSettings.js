@@ -7,6 +7,7 @@ import { Panel, Table, Button, ButtonGroup, Form, FormGroup, Col, FormControl, C
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { pushConfig } from '../../actions/config'
+import { FormattedMessage } from 'react-intl'
 
 import Binance from './exchanges/Binance'
 import Bitfinex from './exchanges/Bitfinex'
@@ -55,13 +56,13 @@ class CreateSettings extends Component {
     return (
       <Fragment>
         <ButtonGroup>
-          <Button onClick={onSave}>Save</Button>
-          <Button onClick={onCancel}>Cancel</Button>
+          <Button onClick={onSave}><FormattedMessage id='settings.save'/></Button>
+          <Button onClick={onCancel}><FormattedMessage id='settings.cancel'/></Button>
         </ButtonGroup>
 
         <form>
           <FormGroup controlId='place'>
-            <ControlLabel>exchanges/wallets</ControlLabel>
+            <ControlLabel><FormattedMessage id='settings.exchanges-wallets'/></ControlLabel>
             <FormControl
               componentClass='select'
               placeholder='select'

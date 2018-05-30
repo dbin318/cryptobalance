@@ -8,6 +8,7 @@ import { Panel, Table, Button, ButtonGroup, FormGroup, FormControl, ControlLabel
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { pushConfig } from '../../actions/config'
+import { FormattedMessage } from 'react-intl'
 
 class ExportSettings extends Component {
   constructor (props) {
@@ -23,12 +24,11 @@ class ExportSettings extends Component {
     return (
       <Fragment>
         <ButtonGroup>
-          <Button><Link to='/settings'>Settings</Link></Button>
+          <Button><Link to='/settings'><FormattedMessage id='settings.list'/></Link></Button>
         </ButtonGroup>
 
         <form>
           <FormGroup controlId='showSettings'>
-            <ControlLabel>settings</ControlLabel>
             <FormControl
               componentClass='textarea'
               inputRef={this.setSettingsRef}

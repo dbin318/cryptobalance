@@ -9,7 +9,7 @@ import { withRouter, Link } from 'react-router-dom'
 import CreateSettings from './CreateSettings'
 import { connect } from 'react-redux'
 import { pushConfig } from '../../actions/config'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, FormattedDate } from 'react-intl'
 
 class Settings extends Component {
   constructor (props) {
@@ -64,7 +64,10 @@ class Settings extends Component {
 
   getNormalizedValue = (name, value) => {
     if (name === 'password' || name === 'apiSecretKey') return '***'
-    if (name === 'created') return new Date(value).toLocaleString()
+    if (name === 'created') return (
+      <FormattedDate value={value}/>
+    )
+    // new Date(value).toLocaleString()
     return value
   }
 

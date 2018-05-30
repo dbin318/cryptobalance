@@ -8,6 +8,7 @@ import { Alert, Panel, Table, Button, ButtonGroup, FormGroup, FormControl, Contr
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { pushConfig } from '../../actions/config'
+import { FormattedMessage } from 'react-intl'
 
 class ImportSettings extends Component {
   constructor (props) {
@@ -25,13 +26,12 @@ class ImportSettings extends Component {
     return (
       <Fragment>
         <ButtonGroup>
-          <Button onClick={onSave}>Save</Button>
-          <Button onClick={onCancel}>Settings</Button>
+          <Button onClick={onSave}><FormattedMessage id='settings.save'/></Button>
+          <Button onClick={onCancel}><FormattedMessage id='settings.cancel'/></Button>
         </ButtonGroup>
 
         <form>
           <FormGroup controlId='showSettings'>
-            <ControlLabel>settings</ControlLabel>
             <FormControl
               componentClass='textarea'
               inputRef={this.setSettingsRef}
