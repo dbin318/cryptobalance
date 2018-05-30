@@ -5,6 +5,7 @@ const i18nConfig = {
     'header.balance': 'Balance',
     'header.api': 'Api',
     'header.about': 'About',
+    'header.settings': 'Settings',
     'balance.refresh': 'Refresh',
     'balance.no-api': 'There is no exchange configuration.',
     'balance.create-api': 'Add Api configuration',
@@ -24,6 +25,8 @@ const i18nConfig = {
     'about.description': 'Cryptobalance accumulates the balance of crypto exchanges and wallets in real-time.',
     'about.supported-exchanges': 'Supported exchanges',
     'about.supported-wallets': 'Supported wallets',
+    'settings.language': 'language',
+    'settings.currency': 'currency',
   }
 }
 

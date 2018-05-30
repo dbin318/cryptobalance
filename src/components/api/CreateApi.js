@@ -69,8 +69,7 @@ class CreateApi extends Component {
             >
               {Object.entries(supportedCryptoPlaces).map(([name, config]) => (
                 <option value={name}>{name}</option>
-              ))
-              }
+              ))}
             </FormControl>
           </FormGroup>
           {CryptoComponents[cryptoPlace]}

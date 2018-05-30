@@ -5,6 +5,7 @@ const i18nConfig = {
     'header.balance': '잔고',
     'header.api': 'Api',
     'header.about': '정보',
+    'header.settings': '설정',
     'balance.refresh': '갱신',
     'balance.no-api': '설정된 연결 정보가 없습니다.',
     'balance.create-api': '설정 추가',
@@ -24,6 +25,8 @@ const i18nConfig = {
     'about.description': 'Cryptobalance는 실시간으로 거래소와 지갑에서 잔액을 가져와 보여줍니다.',
     'about.supported-exchanges': '지원 거래소',
     'about.supported-wallets': '지원 지갑',
+    'settings.language': '언어',
+    'settings.currency': '통화',
   }
 }
 

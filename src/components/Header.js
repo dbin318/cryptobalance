@@ -32,6 +32,9 @@ class Header extends Component {
             <FormattedMessage id='header.api' />
           </NavItem>
           <NavItem eventKey={3}>
+            <FormattedMessage id='header.settings' />
+          </NavItem>
+          <NavItem eventKey={4}>
             <FormattedMessage id='header.about' />
           </NavItem>
         </Nav>
@@ -53,8 +56,12 @@ class Header extends Component {
         history.push('/api', {})
         break
       case 3:
+        history.push('/settings', {})
+        break
+      case 4:
         history.push('/about', {})
         break
+
     }
   }
 }

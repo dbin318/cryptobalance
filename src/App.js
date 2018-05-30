@@ -9,6 +9,7 @@ import CreateApi from './components/api/CreateApi'
 import ExportApi from './components/api/ExportApi'
 import ImportApi from './components/api/ImportApi'
 import About from './components/About'
+import Settings from './components/settings/Settings'
 
 class App extends Component {
   render() {
@@ -21,7 +22,8 @@ class App extends Component {
           <Route exact path='/api/create' component={CreateApi} />
           <Route exact path='/api/export' component={ExportApi} />
           <Route exact path='/api/import' component={ImportApi} />
-          <Route path='/about' component={About} />
+          <Route exact path='/about' component={About} />
+          <Route exact path='/settings' component={Settings} />
         </div>
       </Router>
     )
