@@ -45,8 +45,8 @@ class Balance extends Component {
         }
         {summaryType !== BEGIN_SUMMARY && summaryType !== ERROR_SUMMARY && isSummaryEmpty &&
           <Fragment>
-            <h2><FormattedMessage id='balance.no-settings' /></h2>
-            <Link to='/settings/create'><FormattedMessage id='balance.create-settings' /></Link>
+            <h2><FormattedMessage id='balance.no-api' /></h2>
+            <Link to='/api/create'><FormattedMessage id='balance.create-api' /></Link>
           </Fragment>
         }
 

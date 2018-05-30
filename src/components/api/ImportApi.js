@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import { pushConfig } from '../../actions/config'
 import { FormattedMessage } from 'react-intl'
 
-class ImportSettings extends Component {
+class ImportApi extends Component {
   constructor (props) {
     super(props)
 
@@ -26,8 +26,8 @@ class ImportSettings extends Component {
     return (
       <Fragment>
         <ButtonGroup>
-          <Button onClick={onSave}><FormattedMessage id='settings.save'/></Button>
-          <Button onClick={onCancel}><FormattedMessage id='settings.cancel'/></Button>
+          <Button onClick={onSave}><FormattedMessage id='api.save'/></Button>
+          <Button onClick={onCancel}><FormattedMessage id='api.cancel'/></Button>
         </ButtonGroup>
 
         <form>
@@ -82,7 +82,7 @@ class ImportSettings extends Component {
 
   onCancel = () => {
     const { history } = this.props
-    history.replace('/settings', {})
+    history.replace('/api', {})
   }
 
   /**
@@ -111,7 +111,7 @@ class ImportSettings extends Component {
   }
 }
 
-ImportSettings.propTypes = {
+ImportApi.propTypes = {
   config: PropTypes.object.isRequired
 }
 
@@ -125,4 +125,4 @@ const mapDispatchToProps = {
   pushConfig
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ImportSettings))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ImportApi))

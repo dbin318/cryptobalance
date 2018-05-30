@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import { pushConfig } from '../../actions/config'
 import { FormattedMessage } from 'react-intl'
 
-class ExportSettings extends Component {
+class ExportApi extends Component {
   constructor (props) {
     super(props)
 
@@ -24,7 +24,7 @@ class ExportSettings extends Component {
     return (
       <Fragment>
         <ButtonGroup>
-          <Button><Link to='/settings'><FormattedMessage id='settings.list'/></Link></Button>
+          <Button><Link to='/api'><FormattedMessage id='api.list'/></Link></Button>
         </ButtonGroup>
 
         <form>
@@ -54,7 +54,7 @@ class ExportSettings extends Component {
   }
 }
 
-ExportSettings.propTypes = {
+ExportApi.propTypes = {
   config: PropTypes.object.isRequired
 }
 
@@ -64,4 +64,4 @@ const mapStateToProps = ({ config: configState }) => {
   return { config }
 }
 
-export default withRouter(connect(mapStateToProps)(ExportSettings))
+export default withRouter(connect(mapStateToProps)(ExportApi))

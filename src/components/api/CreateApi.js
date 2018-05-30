@@ -28,41 +28,39 @@ const CryptoComponents = {
   coinone: <Coinone />,
 }
 
-class CreateSettings extends Component {
+class CreateApi extends Component {
   constructor (props) {
     super(props)
 
     // API를 제공하지 않는 exchanges는 거름
     const exchanges = this.filterExchanges(oldExchanges)
     this.supportedCryptoPlaces = Object.assign({}, exchanges, wallets)
-    console.log('CreateSettings crypto', this.supportedCryptoPlaces)
+    console.log('CreateApi crypto', this.supportedCryptoPlaces)
 
     const defaultCryptoPlace = Object.keys(this.supportedCryptoPlaces)[0]
 
     // cryptoPlace가 route에서 전달되었는지 확인
     const cryptoPlace = this.props.location && this.props.location.state && this.props.location.state.cryptoPlace || defaultCryptoPlace
 
-    console.log('CreateSettings', cryptoPlace, this.props.location.state)
+    console.log('CreateApi', cryptoPlace, this.props.location.state)
 
     this.state = { cryptoPlace }
   }
 
   render() {
-    console.log('CreateSettings')
-
     const { onSave, onCancel, onSelect, supportedCryptoPlaces } = this
     const { cryptoPlace } = this.state
 
     return (
       <Fragment>
         <ButtonGroup>
-          <Button onClick={onSave}><FormattedMessage id='settings.save'/></Button>
-          <Button onClick={onCancel}><FormattedMessage id='settings.cancel'/></Button>
+          <Button onClick={onSave}><FormattedMessage id='api.save'/></Button>
+          <Button onClick={onCancel}><FormattedMessage id='api.cancel'/></Button>
         </ButtonGroup>
 
         <form>
           <FormGroup controlId='place'>
-            <ControlLabel><FormattedMessage id='settings.exchanges-wallets'/></ControlLabel>
+            <ControlLabel><FormattedMessage id='api.exchanges-wallets'/></ControlLabel>
             <FormControl
               componentClass='select'
               placeholder='select'
@@ -107,18 +105,18 @@ class CreateSettings extends Component {
 
     await this.props.pushConfig(config)
 
-    history.replace('/settings', {})
+    history.replace('/api', {})
   }
 
   onCancel = () => {
     console.log('cancel')
 
     const { history } = this.props
-    history.replace('/settings', {})
+    history.replace('/api', {})
   }
 }
 
-CreateSettings.propTypes = {
+CreateApi.propTypes = {
   config: PropTypes.object.isRequired
 }
 
@@ -132,4 +130,4 @@ const mapStateToProps = ({ config: configState }) => {
   return { config }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateSettings))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateApi))

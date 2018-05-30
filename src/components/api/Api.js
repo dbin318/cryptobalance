@@ -6,12 +6,11 @@ import Header from '../Header'
 import { get, set, wallets, exchanges, STORAGE_KEY } from '../../actions/summary/storage'
 import { Panel, Table, Button, ButtonGroup, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap'
 import { withRouter, Link } from 'react-router-dom'
-import CreateSettings from './CreateSettings'
 import { connect } from 'react-redux'
 import { pushConfig } from '../../actions/config'
 import { FormattedMessage, FormattedDate } from 'react-intl'
 
-class Settings extends Component {
+class Api extends Component {
   constructor (props) {
     super(props)
   }
@@ -23,9 +22,9 @@ class Settings extends Component {
     return (
       <Fragment>
         <ButtonGroup>
-          <Button><Link to='/settings/create'><FormattedMessage id='settings.add'/></Link></Button>
-          <Button><Link to='/settings/export'><FormattedMessage id='settings.export'/></Link></Button>
-          <Button><Link to='/settings/import'><FormattedMessage id='settings.import'/></Link></Button>
+          <Button><Link to='/api/create'><FormattedMessage id='api.add'/></Link></Button>
+          <Button><Link to='/api/export'><FormattedMessage id='api.export'/></Link></Button>
+          <Button><Link to='/api/import'><FormattedMessage id='api.import'/></Link></Button>
         </ButtonGroup>
 
         {cryptoPlaces &&
@@ -38,8 +37,8 @@ class Settings extends Component {
               </Panel.Heading>
               <Panel.Body>
                 <ButtonGroup>
-                  <Button onClick={onUpdate.bind(this, name)}><FormattedMessage id='settings.update'/></Button>
-                  <Button onClick={onDelete.bind(this, name)}><FormattedMessage id='settings.delete'/></Button>
+                  <Button onClick={onUpdate.bind(this, name)}><FormattedMessage id='api.update'/></Button>
+                  <Button onClick={onDelete.bind(this, name)}><FormattedMessage id='api.delete'/></Button>
                 </ButtonGroup>
               </Panel.Body>
               {config &&
@@ -76,7 +75,7 @@ class Settings extends Component {
 
     console.log('onUpdate name', name)
 
-    history.push('/settings/create', { cryptoPlace: name })
+    history.push('/api/create', { cryptoPlace: name })
   }
 
   /**
@@ -96,7 +95,7 @@ class Settings extends Component {
   }
 }
 
-Settings.propTypes = {
+Api.propTypes = {
   config: PropTypes.object.isRequired
 }
 
@@ -110,4 +109,4 @@ const mapDispatchToProps = {
   pushConfig
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Settings))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Api))

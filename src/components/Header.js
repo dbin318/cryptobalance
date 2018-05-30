@@ -29,7 +29,7 @@ class Header extends Component {
             <FormattedMessage id='header.balance' />
           </NavItem>
           <NavItem eventKey={2}>
-            <FormattedMessage id='header.settings' />
+            <FormattedMessage id='header.api' />
           </NavItem>
           <NavItem eventKey={3}>
             <FormattedMessage id='header.about' />
@@ -50,7 +50,7 @@ class Header extends Component {
         history.push('/', {})
         break
       case 2:
-        history.push('/settings', {})
+        history.push('/api', {})
         break
       case 3:
         history.push('/about', {})
