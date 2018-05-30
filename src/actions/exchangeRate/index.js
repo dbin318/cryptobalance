@@ -25,7 +25,7 @@ export function fetchExchangeRate() {
 
       if (!exchangeRate.date || exchangeRate.usd === -1) {
         // default if empty
-        exchangeRate = { date: '20180520', usd: 1080 }
+        exchangeRate = { date: new Date(2018, 5, 20), usd: 1080 }
       }
       dispatch(createExchangeRateAction({
         updated: Date.now(),
@@ -84,17 +84,16 @@ function needFetchExchangeRate(exchangeRate) {
 
   if (!date) return true
 
-  const curDate = getYYYYMMDD()
+  const curDate = Date.now()
   // 1. date가 어제이전
-  if (Number(date) < Number(curDate)) return true
+  if (date < curDate) return true
   // 2. date가 오늘 && 11시 이후
-  if (date === curDate) {
+  if (date.getDate() === curDate.getDate() && date.getMonth() === curDate.getMonth()) {
     // 이미 -1이면 오늘이 공휴일이기 때문에 가져올 필요가 없다.
     if ( usd === -1) return false
 
-    // hour 0 ~ 23
-    const hour = new Date().getHours()
-    if (hour >= 10) return true
+    // hour 0 ~,
+    if (curDate.getHours() >= 10) return true
   }
   return false
 }

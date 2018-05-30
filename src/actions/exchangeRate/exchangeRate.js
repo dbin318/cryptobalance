@@ -2,6 +2,7 @@ import request from 'request-promise'
 
 /**
  * 환율정보 by 한국수출입은행
+ * @TODO tps 문제 존재. -> tps가 넉넉한 API로 바꿀 것
  *
  * https://www.koreaexim.go.kr/site/program/openapi/openApiView?menuid=001003002002001&apino=2&viewtype=C
  *
@@ -17,22 +18,24 @@ import request from 'request-promise'
  * @param {*} usd
  */
 
-const apiKey = '0BgMJQwatoqRxc2GFDclklPIWFF5RpUv'
+
+ const apiKey = '0BgMJQwatoqRxc2GFDclklPIWFF5RpUv'
 
 /**
  *
  * get today exchange rate
  * usd only
  *
- * @return { date: YYYYMMDD, usd: 1070 }
- * { date: YYYYMMDD, usd: -1  } if the exchange rate is unavailable
+ * @return { date: Date, usd: 1070 }
+ * { date: Date, usd: -1  } if the exchange rate is unavailable
  */
 export async function getExchangeRate() {
   const url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON'
-  const date = getYYYYMMDD()
+  const date = new Date()
+  const searchDate = getYYYYMMDD(date)
   const qs = {
     authkey: apiKey,
-    searchdate: date,
+    searchdate: searchDate,
     data: 'AP01'
   }
   const options = {
@@ -66,8 +69,7 @@ export async function getExchangeRate() {
 }
 
 
-export function getYYYYMMDD() {
-  const date = new Date()
+export function getYYYYMMDD(date) {
   const YYYYMMDD = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${date.getDate()}`
   return YYYYMMDD
 }
