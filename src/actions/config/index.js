@@ -1,18 +1,18 @@
 
-import { get, set, STORAGE_KEY } from '../summary/storage'
+import { get, set, STORAGE_KEY, SETTINGS_KEY } from '../summary/storage'
 
 export const SET_CONFIG = 'SET_CONFIG'
 
-export function setConfigAction(config) {
+export function setConfigAction(params) {
   return {
     type: SET_CONFIG,
-    item: config
+    item: params
   }
 }
 
-export function setConfig(config) {
+export function setConfig(params) {
   return async (dispatch, getState) => {
-    dispatch(setConfigAction({ config }))
+    dispatch(setConfigAction(params))
   }
 }
 
@@ -23,23 +23,27 @@ export function setConfig(config) {
 export function fetchConfig() {
   return async (dispatch, getState) => {
     const config = get(STORAGE_KEY) || {}
-
+    const settings = get(SETTINGS_KEY) || {}
     // console.log('fetchConfig, config', config)
 
-    dispatch(setConfigAction({ config }))
+    dispatch(setConfigAction({ config, settings }))
   }
 }
 
 /**
  * storage에 config를 저장
  *
+ * @param {Object} { config, settings }
  */
-export function pushConfig(config) {
+export function pushConfig(params) {
   return async (dispatch, getState) => {
-    set(STORAGE_KEY, config)
+    const { config, settings } = params
 
-    console.log('pushConfig, config', config)
+    if (config) set(STORAGE_KEY, config)
+    if (settings) set(SETTINGS_KEY, settings)
 
-    dispatch(setConfigAction({ config }))
+    console.log('pushConfig', params)
+
+    dispatch(setConfigAction(params))
   }
 }

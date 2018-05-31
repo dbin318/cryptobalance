@@ -1,17 +1,31 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { Panel, Table, Button, ButtonGroup, Form, FormGroup, Col, FormControl, ControlLabel, DropdownButton, MenuItem, Breadcrumb } from 'react-bootstrap'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl, FormattedMessage, intlShape } from 'react-intl'
+import { pushConfig } from '../../actions/config'
+import { connect } from 'react-redux'
 
 class Settings extends Component {
   constructor(props) {
     super(props)
+    const { intl } = this.props
+    const { formatMessage } = intl
+
+    this.languages = [{
+      displayName: formatMessage({ id: 'settings.korean' }),
+      value: 'ko',
+    }, {
+      displayName: formatMessage({ id: 'settings.english' }),
+      value: 'en',
+    }]
+    this.currencies = ['USD', 'KRW']
   }
 
   render() {
-    const languages = ['korean', 'english']
-    const currencies = ['USD', 'KRW']
+    const { languages, currencies } = this
     const { onSelectLanguage, onSelectCurrency, onList } = this
+    const { settings = {}} = this.props
+    const { language = 'ko', currency = 'krw' } = settings
 
     return (
       <Fragment>
@@ -22,10 +36,10 @@ class Settings extends Component {
               componentClass='select'
               placeholder='select'
               onChange={onSelectLanguage}
-              value={languages[0]}
+              value={language}
             >
-              {languages.map(language => (
-                <option value={language}>{language}</option>
+              {languages.map(({ displayName, value }) => (
+                <option value={value}>{displayName}</option>
               ))}
             </FormControl>
           </FormGroup>
@@ -35,7 +49,7 @@ class Settings extends Component {
               componentClass='select'
               placeholder='select'
               onChange={onSelectCurrency}
-              value={currencies[0]}
+              value={currency}
             >
               {currencies.map(currency => (
                 <option value={currency}>{currency}</option>
@@ -47,6 +61,47 @@ class Settings extends Component {
     )
   }
 
+  onSelectLanguage = async (event) => {
+    const language = event.target.value
+
+    console.log('onSelectLanguage', language)
+
+    const { pushConfig, settings } = this.props
+
+    await pushConfig({
+      settings: Object.assign({}, settings, {
+        language
+      })
+    })
+  }
+
+  onSelectCurrency = async (event) => {
+    const currency = event.target.value
+
+    console.log('onSelectCurrency', currency)
+
+    const { pushConfig, settings } = this.props
+
+    await pushConfig({
+      settings: Object.assign({}, settings, {
+        currency
+      })
+    })
+  }
 }
 
-export default Settings
+Settings.propTypes = {
+  intl: intlShape.isRequired,
+  settings: PropTypes.object.isRequired,
+}
+
+const mapDispatchToProps = {
+  pushConfig
+}
+
+const mapStateToProps = ({ config: configState }) => {
+  const { settings } = configState
+  return { settings }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(Settings))

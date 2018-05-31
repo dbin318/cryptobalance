@@ -53,7 +53,7 @@ class Bithumb extends Component {
 
     console.log('Bithumb handleChange', config)
 
-    this.props.setConfig(config)
+    this.props.setConfig({ config })
   }
 
   validateApiKey = () => {

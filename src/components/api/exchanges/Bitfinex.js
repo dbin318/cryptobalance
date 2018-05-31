@@ -50,7 +50,7 @@ class Bitfinex extends Component {
     })
     const config = Object.assign({}, this.props.config, { bitfinex })
 
-    this.props.setConfig(config)
+    this.props.setConfig({ config })
   }
 
   validateApiKey = () => {

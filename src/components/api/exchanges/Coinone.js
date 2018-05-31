@@ -53,7 +53,7 @@ class Coinone extends Component {
 
     console.log('Coinone handleChange', config)
 
-    this.props.setConfig(config)
+    this.props.setConfig({ config })
   }
 
   validateApiKey = () => {

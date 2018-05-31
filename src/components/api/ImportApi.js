@@ -54,15 +54,13 @@ class ImportApi extends Component {
     // console.log('save, settings', settings)
     let showAlert = false, alertMessage = '', alertStyle = 'success'
 
-
     if (settings) {
       try {
         const settingsObject = JSON.parse(settings)
 
-        const normalizedSettings = this.normalizeSettings(settingsObject)
-        // console.log('onSave, normalizedSettings', normalizedSettings)
+        const config = this.normalizeSettings(settingsObject)
+        await this.props.pushConfig({ config })
 
-        await this.props.pushConfig(normalizedSettings)
         showAlert = true
         alertMessage = 'save done'
         alertStyle = 'success'

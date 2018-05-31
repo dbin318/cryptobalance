@@ -91,7 +91,7 @@ class Api extends Component {
     console.log('onDelete', newConfig)
 
     // save
-    this.props.pushConfig(newConfig)
+    this.props.pushConfig({ config: newConfig })
   }
 }
 

@@ -62,7 +62,7 @@ class Cex extends Component {
     })
     const config = Object.assign({}, this.props.config, { cex })
 
-    this.props.setConfig(config)
+    this.props.setConfig({ config })
   }
 
   validateApiKey = () => {

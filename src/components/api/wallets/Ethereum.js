@@ -51,7 +51,7 @@ class Ethereum extends Component {
     })
     const config = Object.assign({}, this.props.config, { ethereum })
 
-    this.props.setConfig(config)
+    this.props.setConfig({ config })
   }
 
   validateApiKey = () => {

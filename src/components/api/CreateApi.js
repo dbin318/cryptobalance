@@ -102,7 +102,7 @@ class CreateApi extends Component {
     // redux -> storage
     console.log('onSave', config)
 
-    await this.props.pushConfig(config)
+    await this.props.pushConfig({ config })
 
     history.replace('/api', {})
   }
@@ -116,7 +116,8 @@ class CreateApi extends Component {
 }
 
 CreateApi.propTypes = {
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
 }
 
 const mapDispatchToProps = {

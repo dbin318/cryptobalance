@@ -7,7 +7,6 @@ import { get, set, wallets, exchanges, STORAGE_KEY } from '../../actions/summary
 import { Panel, Table, Button, ButtonGroup, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { pushConfig } from '../../actions/config'
 import { FormattedMessage } from 'react-intl'
 
 class ExportApi extends Component {

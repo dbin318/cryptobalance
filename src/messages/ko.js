@@ -27,6 +27,8 @@ const i18nConfig = {
     'about.supported-wallets': '지원 지갑',
     'settings.language': '언어',
     'settings.currency': '통화',
+    'settings.korean': '한국어',
+    'settings.english': '영어',
   }
 }
 

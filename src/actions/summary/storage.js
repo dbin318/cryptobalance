@@ -12,6 +12,8 @@ import * as ethereum from './wallets/ethereum'
 export const STORAGE_KEY = 'cryptoPlaces'
 // exchange rate
 export const EXCHANGE_RATE_KEY = 'exchangeRate'
+// settings
+export const SETTINGS_KEY = 'settings'
 
 export const exchanges = {
   korbit,

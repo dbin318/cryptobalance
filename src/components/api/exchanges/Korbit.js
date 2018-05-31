@@ -78,7 +78,7 @@ class Korbit extends Component {
     })
     const config = Object.assign({}, this.props.config, { korbit })
 
-    this.props.setConfig(config)
+    this.props.setConfig({ config })
   }
 
   validateApiKey = () => {

@@ -17,7 +17,7 @@ class Balance extends Component {
   }
 
   render() {
-    const { summary: summaryState, fetchSummary, exchangeRate: exchangeRateState } = this.props
+    const { summary: summaryState, fetchSummary, exchangeRate: exchangeRateState, config: configState } = this.props
     const { type: summaryType, updated, summary } = summaryState
     const { exchangeRate: { date, usd } } = exchangeRateState
     // console.log('Balance render', exchangeRateState)
@@ -139,11 +139,13 @@ class Balance extends Component {
 }
 
 Balance.propTypes = {
-  summary: PropTypes.object.isRequired
+  summary: PropTypes.object.isRequired,
+  exchangeRate: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = ({ summary, exchangeRate }) => {
-  return { summary, exchangeRate }
+const mapStateToProps = ({ summary, exchangeRate, config }) => {
+  return { summary, exchangeRate, config }
 }
 
 const mapDispatchToProps = {
