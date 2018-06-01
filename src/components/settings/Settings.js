@@ -8,21 +8,23 @@ import { connect } from 'react-redux'
 class Settings extends Component {
   constructor(props) {
     super(props)
+
+    this.currencies = ['USD', 'KRW']
+  }
+
+  render() {
     const { intl } = this.props
     const { formatMessage } = intl
 
-    this.languages = [{
+    const languages = [{
       displayName: formatMessage({ id: 'settings.korean' }),
       value: 'ko',
     }, {
       displayName: formatMessage({ id: 'settings.english' }),
       value: 'en',
     }]
-    this.currencies = ['USD', 'KRW']
-  }
+    const { currencies } = this
 
-  render() {
-    const { languages, currencies } = this
     const { onSelectLanguage, onSelectCurrency, onList } = this
     const { settings = {}} = this.props
     const { language = 'ko', currency = 'krw' } = settings
