@@ -18,13 +18,19 @@ class Balance extends Component {
 
   render() {
     const { summary: summaryState, fetchSummary, exchangeRate: exchangeRateState, config: configState } = this.props
-    const { type: summaryType, updated, summary } = summaryState
+    const { type: summaryType, updated, summary = {} } = summaryState
     const { exchangeRate: { date, usd } } = exchangeRateState
     // console.log('Balance render', exchangeRateState)
 
     const isSummaryEmpty = Boolean(!summary || Object.keys(summary).length === 0)
     console.log('Balance, summary', summaryType, updated, summary, date, usd)
 
+    const sortedBalance = Object.entries(summary)
+      .sort(([currency1, cryptoPlaces1], [currency2, cryptoPlaces2]) => {
+        const a = cryptoPlaces1 && cryptoPlaces1.total && (cryptoPlaces1.total.price * (cryptoPlaces1.total.amount || 0)) || 0
+        const b = cryptoPlaces2 && cryptoPlaces2.total && (cryptoPlaces2.total.price * (cryptoPlaces2.total.amount || 0)) || 0
+        return b - a
+      })
     return (
       <Fragment>
         <ButtonGroup>
@@ -70,46 +76,40 @@ class Balance extends Component {
                 <FormattedNumber value={summary.total} style='currency' currency='KRW'/>
               </Panel.Body>
             </Panel>
-            {Object.entries(summary)
-              .sort(([currency1, cryptoPlaces1], [currency2, cryptoPlaces2]) => {
-                const a = cryptoPlaces1 && cryptoPlaces1.total && cryptoPlaces1.total.price || 0
-                const b = cryptoPlaces2 && cryptoPlaces2.total && cryptoPlaces2.total.price || 0
-                return b - a
-              })
-              .map(([currency, cryptoPlaces]) => (
-                currency !== 'total' &&
-                  <Panel bsStyle='success'>
-                    <Panel.Heading>
-                      <Panel.Title componentClass='h3'>
-                        {currency}
-                      </Panel.Title>
-                    </Panel.Heading>
-                    <Panel.Body>
-                      {cryptoPlaces.total && cryptoPlaces.total.price &&
-                        <FormattedNumber value={Math.round(cryptoPlaces.total.price * (cryptoPlaces.total.amount || 0))} style='currency' currency='KRW'/>
-                      }
-                    </Panel.Body>
-                    <Table striped bordered condensed hover>
-                      <tbody>
-                        {this.sortByAmount(Object.entries(cryptoPlaces)).map(([cryptoPlaceName, { amount, price }]) =>
-                          <tr>
-                            <td>{cryptoPlaceName}</td>
-                            <td>{amount || 0}</td>
-                            <td>
-                              {price &&
-                                <FormattedNumber value={Math.round(price)} style='currency' currency='KRW'/>
-                              }
-                            </td>
-                            <td>
-                              {price &&
-                                <FormattedNumber value={Math.round(price * (amount || 0))} style='currency' currency='KRW'/>
-                              }
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </Table>
-                  </Panel>
+            {sortedBalance.map(([currency, cryptoPlaces]) => (
+              currency !== 'total' &&
+                <Panel bsStyle='success'>
+                  <Panel.Heading>
+                    <Panel.Title componentClass='h3'>
+                      {currency}
+                    </Panel.Title>
+                  </Panel.Heading>
+                  <Panel.Body>
+                    {cryptoPlaces.total && cryptoPlaces.total.price &&
+                      <FormattedNumber value={Math.round(cryptoPlaces.total.price * (cryptoPlaces.total.amount || 0))} style='currency' currency='KRW'/>
+                    }
+                  </Panel.Body>
+                  <Table striped bordered condensed hover>
+                    <tbody>
+                      {this.sortByAmount(Object.entries(cryptoPlaces)).map(([cryptoPlaceName, { amount, price }]) =>
+                        <tr>
+                          <td>{cryptoPlaceName}</td>
+                          <td><FormattedNumber value={amount || 0} maximumFractionDigits={18} /></td>
+                          <td>
+                            {price &&
+                              <FormattedNumber value={Math.round(price)} style='currency' currency='KRW'/>
+                            }
+                          </td>
+                          <td>
+                            {price &&
+                              <FormattedNumber value={Math.round(price * (amount || 0))} style='currency' currency='KRW'/>
+                            }
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </Table>
+                </Panel>
               ))
             }
           </Fragment>
