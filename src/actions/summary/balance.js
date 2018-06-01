@@ -56,7 +56,7 @@ async function getBalances(configObject = {}) {
 }
 
 /**
- * merge each exchange's prices
+ * merge each exchange's prices in krw
  *
  * @param {Object} configuration
  * @param {*} currencies

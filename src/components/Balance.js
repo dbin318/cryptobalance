@@ -20,10 +20,11 @@ class Balance extends Component {
     const { summary: summaryState, fetchSummary, exchangeRate: exchangeRateState, config: configState } = this.props
     const { type: summaryType, updated, summary = {} } = summaryState
     const { exchangeRate: { date, usd } } = exchangeRateState
-    // console.log('Balance render', exchangeRateState)
+    const { settings: { currency: balanceCurrency = 'krw' }  } = configState
+    console.log('Balance render, configState', configState)
 
     const isSummaryEmpty = Boolean(!summary || Object.keys(summary).length === 0)
-    console.log('Balance, summary', summaryType, updated, summary, date, usd)
+    console.log('Balance, summary', summaryType, updated, summary, date, usd, balanceCurrency)
 
     const sortedBalance = Object.entries(summary)
       .sort(([currency1, cryptoPlaces1], [currency2, cryptoPlaces2]) => {
@@ -31,6 +32,9 @@ class Balance extends Component {
         const b = cryptoPlaces2 && cryptoPlaces2.total && (cryptoPlaces2.total.price * (cryptoPlaces2.total.amount || 0)) || 0
         return b - a
       })
+
+    const { getCurrencyValue, sortByAmount } = this
+
     return (
       <Fragment>
         <ButtonGroup>
@@ -69,11 +73,11 @@ class Balance extends Component {
             <Panel bsStyle='primary'>
               <Panel.Heading>
                 <Panel.Title componentClass='h3'>
-                  total
+                  <FormattedMessage id='balance.total'/>
                 </Panel.Title>
               </Panel.Heading>
               <Panel.Body>
-                <FormattedNumber value={summary.total} style='currency' currency='KRW'/>
+                <FormattedNumber value={getCurrencyValue(summary.total, balanceCurrency, usd)} style='currency' currency={balanceCurrency}/>
               </Panel.Body>
             </Panel>
             {sortedBalance.map(([currency, cryptoPlaces]) => (
@@ -86,23 +90,23 @@ class Balance extends Component {
                   </Panel.Heading>
                   <Panel.Body>
                     {cryptoPlaces.total && cryptoPlaces.total.price &&
-                      <FormattedNumber value={Math.round(cryptoPlaces.total.price * (cryptoPlaces.total.amount || 0))} style='currency' currency='KRW'/>
+                      <FormattedNumber value={getCurrencyValue(cryptoPlaces.total.price * (cryptoPlaces.total.amount || 0), balanceCurrency, usd )} style='currency' currency={balanceCurrency}/>
                     }
                   </Panel.Body>
                   <Table striped bordered condensed hover>
                     <tbody>
-                      {this.sortByAmount(Object.entries(cryptoPlaces)).map(([cryptoPlaceName, { amount, price }]) =>
+                      {sortByAmount(Object.entries(cryptoPlaces)).map(([cryptoPlaceName, { amount, price }]) =>
                         <tr>
                           <td>{cryptoPlaceName}</td>
                           <td><FormattedNumber value={amount || 0} maximumFractionDigits={18} /></td>
                           <td>
                             {price &&
-                              <FormattedNumber value={Math.round(price)} style='currency' currency='KRW'/>
+                              <FormattedNumber value={getCurrencyValue(price, balanceCurrency, usd)} style='currency' currency={balanceCurrency}/>
                             }
                           </td>
                           <td>
                             {price &&
-                              <FormattedNumber value={Math.round(price * (amount || 0))} style='currency' currency='KRW'/>
+                              <FormattedNumber value={getCurrencyValue(price * (amount || 0), balanceCurrency, usd)} style='currency' currency={balanceCurrency}/>
                             }
                           </td>
                         </tr>
@@ -119,12 +123,26 @@ class Balance extends Component {
   }
 
   /**
+   * value is krw.
+   * if currency is other than krw, then calculate value with respect to the exchange rate.
+   *
+   * @param krw
+   * @param currency USD or KRW
+   * @param exchange rate if currency === 'usd'
+   * @return
+   */
+  getCurrencyValue = (krw, currency, usd) => {
+    if (currency === 'USD' || currency === 'usd') return Math.round(krw / usd)
+    return Math.round(krw)
+  }
+
+  /**
    * sort by amount
    *
    * @param {Array} [[exchangeName, { amount, price }], ...]
    * @return {Array} sorted array
    */
-  sortByAmount(items) {
+  sortByAmount = (items) => {
     // console.log('sortByAmount', items)
 
     return items.sort((

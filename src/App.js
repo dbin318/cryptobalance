@@ -22,9 +22,9 @@ class App extends Component {
   }
 
   render() {
-    console.log('App language', this.getLanguage())
+    // console.log('App language', this.getDefaultLanguage())
 
-    const { settings: { language = 'ko', currency = 'krw' } } = this.props
+    const { settings: { language = this.getDefaultLanguage(), currency = this.getDefaultCurrency() } } = this.props
     const { messages } = language === 'ko' ? i18nConfigKo : i18nConfigEn
 
     return (
@@ -48,7 +48,7 @@ class App extends Component {
     )
   }
 
-  getLanguage = () => {
+  getDefaultLanguage = () => {
     let language
     if (window.navigator.languages) {
         language = window.navigator.languages[0];
@@ -57,6 +57,13 @@ class App extends Component {
     }
     return language
   }
+
+  getDefaultCurrency = () => {
+    const language = this.getDefaultLanguage()
+
+    return language === 'ko' ? 'krw' : 'usd'
+  }
+
 }
 
 App.propTypes = {
