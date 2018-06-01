@@ -8,7 +8,7 @@ const i18nConfig = {
     'header.settings': '설정',
     'balance.refresh': '갱신',
     'balance.no-api': '설정된 연결 정보가 없습니다.',
-    'balance.create-api': '설정 추가',
+    'balance.create-api': 'API 설정 추가',
     'balance.loading': '로딩중...',
     'balance.loading-errors': '로딩 에러',
     'balance.last-updated': '마지막 갱신',

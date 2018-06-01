@@ -9,7 +9,7 @@ class Settings extends Component {
   constructor(props) {
     super(props)
 
-    this.currencies = ['USD', 'KRW']
+    this.currencies = ['KRW', 'USD']
   }
 
   render() {
@@ -26,8 +26,10 @@ class Settings extends Component {
     const { currencies } = this
 
     const { onSelectLanguage, onSelectCurrency, onList } = this
-    const { settings = {}} = this.props
-    const { language = 'ko', currency = 'krw' } = settings
+    const { settings: {
+      language = this.getDefaultLanguage(),
+      currency = this.getDefaultCurrency()
+    } } = this.props
 
     return (
       <Fragment>
@@ -90,6 +92,23 @@ class Settings extends Component {
       })
     })
   }
+
+  getDefaultLanguage = () => {
+    let language
+    if (window.navigator.languages) {
+        language = window.navigator.languages[0];
+    } else {
+        language = window.navigator.userLanguage || window.navigator.language;
+    }
+    return language
+  }
+
+  getDefaultCurrency = () => {
+    const language = this.getDefaultLanguage()
+
+    return language === 'ko' ? 'krw' : 'usd'
+  }
+
 }
 
 Settings.propTypes = {
