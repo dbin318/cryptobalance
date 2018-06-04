@@ -1,111 +1,31 @@
 
-import { exchanges, wallets, get, set, STORAGE_KEY } from './storage'
-import { inspect } from 'util'
+import * as korbit from './exchanges/korbit'
+import * as bitfinex from './exchanges/bitfinex'
+import * as upbit from './exchanges/upbit'
+import * as binance from './exchanges/binance'
+import * as cex from './exchanges/cex'
+import * as bithumb from './exchanges/bithumb'
+import * as coinone from './exchanges/coinone'
+import * as ethereum from './wallets/ethereum'
 
-/**
- *
- * merge each exchange's balance
- *
- * @param {Object} config {
- *   korbit: {
- *     apiKey,
- *     apiSecretKey,
- *     ...
- *   }
- * }
- * @return {Object} {
- *  btc: {
- *    bitfix: 1,
- *    upbit: n,
- *  },
- *  etc: {
- *    ..
- *  }
- * }
- */
-async function getBalances(configObject = {}) {
-  const supportedCryptoPlaces = Object.entries(exchanges).concat(Object.entries(wallets))
-
-  const cryptoPlaces = supportedCryptoPlaces.filter(([ name, cryptoPlace ]) => configObject[name])
-
-  // console.log('crypto places', cryptoPlaces)
-
-  // balance
-  if (cryptoPlaces.length == 0) return {}
-
-  const myBalances = await Promise.all(
-      cryptoPlaces.map(([ name, cryptoPlace ]) => cryptoPlace.balance(configObject[name]).catch(err => {
-        // ignore errors
-        console.log('balance', configObject[name], err)
-      }))
-  )
-  // console.log('balance', myBalances)
-
-  const result = {}
-  cryptoPlaces.forEach( ([ name, cryptoPlace ], index) => {
-    const balance = myBalances[index]
-    if (balance) {
-      Object.entries(balance)
-        .forEach(([ currency, amount ]) => {
-          if (!result[currency]) result[currency] = {}
-          result[currency][name] = amount
-        })
-    }
-  })
-  return result
+export const exchanges = {
+  korbit,
+  bitfinex,
+  upbit,
+  binance,
+  cex,
+  bithumb,
+  coinone,
 }
 
-/**
- * merge each exchange's prices in krw
- *
- * @param {Object} configuration
- * @param {*} currencies
- * @param {Object} { usd }
- *
- * @return {Object} {
- *  btc: {
- *    bitfix: 200000,
- *    upbit: 300000,
- *    ...
- *  },
- *  etc: {
- *    ...
- *  }
- * }
- */
-async function getTickers(configObject = {}, currencies, fiatCurrencies) {
-  const myExchanges = Object.entries(exchanges)
-    .filter(([ name, exchange ]) => configObject[name])
-
-  if (myExchanges.length === 0) return {}
-
-  const prices = await Promise.all(
-      myExchanges.map(([ name, exchange ]) => exchange.ticker(currencies, fiatCurrencies).catch(err => {
-        console.log('ticker', name, err)
-      }))
-  )
-  // console.log('ticker api result', prices)
-
-  // 동일 currency의 가격중에 가장 높은 max를 추가
-  const result = {}
-  myExchanges.forEach( ([ name, exchange ], index) => {
-    const price = prices[index]
-    if (price) {
-      Object.entries(price)
-        .forEach(([ currency, priceValue ]) => {
-          if (!result[currency]) result[currency] = {}
-          result[currency][name] = priceValue
-        })
-    }
-  })
-  // console.log('prices', result)
-
-  return result
+export const wallets = {
+  ethereum,
 }
 
 /**
  * get summary
  *
+ * @param {Object} { korbit: {apiKey: ..., }, bitfinex: {}, ... }
  * @param {Object} { usd }
  * @return {
     btc: {
@@ -139,11 +59,8 @@ async function getTickers(configObject = {}, currencies, fiatCurrencies) {
     total: 121212121212212
   }
  */
-export async function getSummary(fiatCurrencies) {
+export async function getSummary(configObject, fiatCurrencies) {
   console.log('getSummary fiatCurrencies', fiatCurrencies)
-
-  const configObject = get(STORAGE_KEY)
-  // console.log('config', configObject)
 
   const balances = await getBalances(configObject)
   // console.log('balances', balances)
@@ -203,7 +120,7 @@ export async function getSummary(fiatCurrencies) {
     })
 
   // fiat currency는 ticker를 갖지 않으므로 total.price를 볃도로 설정
-  Object.entries(fiatCurrencies).forEach( ([ fiatCurrency, price ]) => {
+  Object.entries(fiatCurrencies).forEach(([ fiatCurrency, price ]) => {
     if (result[fiatCurrency] && result[fiatCurrency].total && result[fiatCurrency].total.amount > 0) {
       result[fiatCurrency].total.price = price
     }
@@ -220,6 +137,108 @@ export async function getSummary(fiatCurrencies) {
 
 /**
  *
+ * merge each exchange's balance
+ *
+ * @param {Object} config {
+ *   korbit: {
+ *     apiKey,
+ *     apiSecretKey,
+ *     ...
+ *   }
+ * }
+ * @return {Object} {
+ *  btc: {
+ *    bitfix: 1,
+ *    upbit: n,
+ *  },
+ *  etc: {
+ *    ..
+ *  }
+ * }
+ */
+async function getBalances(configObject = {}) {
+  const supportedCryptoPlaces = Object.entries(exchanges).concat(Object.entries(wallets))
+
+  const cryptoPlaces = supportedCryptoPlaces.filter(([ name, cryptoPlace ]) => configObject[name])
+
+  // console.log('crypto places', cryptoPlaces)
+
+  // balance
+  if (cryptoPlaces.length === 0) return {}
+
+  const myBalances = await Promise.all(
+    cryptoPlaces.map(([ name, cryptoPlace ]) => cryptoPlace.balance(configObject[name]).catch(err => {
+      // ignore errors
+      console.log('balance', configObject[name], err)
+    }))
+  )
+  // console.log('balance', myBalances)
+
+  const result = {}
+  cryptoPlaces.forEach(([ name, cryptoPlace ], index) => {
+    const balance = myBalances[index]
+    if (balance) {
+      Object.entries(balance)
+        .forEach(([ currency, amount ]) => {
+          if (!result[currency]) result[currency] = {}
+          result[currency][name] = amount
+        })
+    }
+  })
+  return result
+}
+
+/**
+ * merge each exchange's prices in krw
+ *
+ * @param {Object} configuration
+ * @param {*} currencies
+ * @param {Object} { usd }
+ *
+ * @return {Object} {
+ *  btc: {
+ *    bitfix: 200000,
+ *    upbit: 300000,
+ *    ...
+ *  },
+ *  etc: {
+ *    ...
+ *  }
+ * }
+ */
+async function getTickers(configObject = {}, currencies, fiatCurrencies) {
+  const myExchanges = Object.entries(exchanges)
+    .filter(([ name, exchange ]) => configObject[name])
+
+  if (myExchanges.length === 0) return {}
+
+  const prices = await Promise.all(
+    myExchanges.map(([ name, exchange ]) => exchange.ticker(currencies, fiatCurrencies).catch(err => {
+      console.log('ticker', name, err)
+    }))
+  )
+  // console.log('ticker api result', prices)
+
+  // 동일 currency의 가격중에 가장 높은 max를 추가
+  const result = {}
+  myExchanges.forEach(([ name, exchange ], index) => {
+    const price = prices[index]
+    if (price) {
+      Object.entries(price)
+        .forEach(([ currency, priceValue ]) => {
+          if (!result[currency]) result[currency] = {}
+          result[currency][name] = priceValue
+        })
+    }
+  })
+  // console.log('prices', result)
+
+  return result
+}
+
+
+/**
+ *
  * @param {Object} { etc: { korbit: 1, bithumb: 2 , ...}, btc: {}, ... }
  */
 function normalizeBalances(balances) {
@@ -231,3 +250,4 @@ function normalizeBalances(balances) {
   })
   return result
 }
+

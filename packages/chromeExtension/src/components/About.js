@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 import { ButtonGroup, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Header from './Header'
-import { exchanges, wallets } from '../actions/summary/storage'
+import { exchanges, wallets } from '@cryptobalance/exchanges'
 import { FormattedMessage } from 'react-intl'
 
 const About = () => (

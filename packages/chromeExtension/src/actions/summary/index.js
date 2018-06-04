@@ -1,5 +1,6 @@
 
-import { getSummary } from './balance'
+import { getSummary } from '@cryptobalance/exchanges'
+import { get, STORAGE_KEY } from './storage'
 
 export const FETCH_SUMMARY = 'FETCH_SUMMARY'
 export const BEGIN_SUMMARY = 'BEGIN_SUMMARY'
@@ -36,9 +37,10 @@ export function fetchSummary() {
     try {
       const { exchangeRate: exchangeRateState } = getState()
       const { exchangeRate } = exchangeRateState
-      console.log('fetchSummary exchangeRate', exchangeRate)
+      const configObject = get(STORAGE_KEY)
+      console.log('fetchSummary exchangeRate', exchangeRate, 'config', configObject)
 
-      summary = await getSummary(exchangeRate)
+      summary = await getSummary(configObject, exchangeRate)
     } catch(error) {
       console.log(error)
       return dispatch(errorSummaryAction())

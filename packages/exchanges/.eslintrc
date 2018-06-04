@@ -1,0 +1,64 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["eslint-config-airbnb"],
+  "rules": {
+    "import/prefer-default-export": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "no-return-assign": "off",
+    "semi": "off",
+    "comma-dangle": "off",
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["off", "prefer-single"],
+    "max-len": ["error", 250],
+    "space-before-function-paren": "off",
+    "no-underscore-dangle": "off",
+    "react/jsx-filename-extension": "off",
+    "arrow-parens": "off",
+    "class-methods-use-this": "off",
+    "no-mixed-operators": "off",
+    "react/forbid-prop-types": "off",
+    "react/sort-comp": "off",
+    "no-nested-ternary": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react/require-default-props": "off",
+    "object-curly-spacing": ["error", "always"],
+    "linebreak-style": "off",
+    "no-use-before-define" : "off",
+    "newline-per-chained-call" : "off",
+    "array-element-newline" : "off",
+    "padding-line-between-statements": "off",
+    "radix": "off",
+    "indent": ["error", 2, {
+      "SwitchCase": 1,
+      "VariableDeclarator": 1,
+      "outerIIFEBody": 1,
+      "FunctionDeclaration": {
+        "parameters": 1,
+        "body": 1
+      },
+      "FunctionExpression": {
+        "parameters": 1,
+        "body": 1
+      }
+    }],
+    "import/first": "off",
+    "no-unused-vars": "warn",
+    "array-bracket-spacing": "off"
+  },
+  "env": {
+    "jest": true
+  },
+  "globals": {
+    "window": true,
+    "naver": true,
+    "document": true,
+    "tCR": true,
+    "navigator": true,
+    "jindo": true,
+    "location": true,
+    "__DEV__": true,
+    "sinon": true,
+    "after": true
+  }
+}
