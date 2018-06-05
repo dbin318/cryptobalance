@@ -23,3 +23,10 @@ build.crx
 build.pem
 build.zip
 .vscode
+
+# Users Environment Variables
+.lock-wscript
+
+# expo
+.expo/
+
