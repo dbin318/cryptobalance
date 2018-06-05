@@ -13,9 +13,14 @@ The supported crypto exchanges are
 The supported crypto wallets are
   - ethereum(by etherscan)
 
+### source 
+  - multi packages supported by lerna
+  
 ### build
 ```
-$ npm run build
+$ npm install -g lerna
+$ lerna run build
+$ lerna run zip
 ```
 
 ### install
@@ -23,7 +28,6 @@ $ npm run build
   after build, add build directory as a chrome extension.
 - from chrome store
   https://chrome.google.com/webstore/detail/crypto-balance/odkgaibemhfnaiogdfbdcldaobbiclcc
-
 
 ### user guide
   - add api key and api secret to fetch the exchanges or wallets.
