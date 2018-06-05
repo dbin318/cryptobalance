@@ -18,7 +18,9 @@ if (env === 'build') {
 }
 
 const config = {
-  entry: __dirname + '/src/index.js',
+  entry: ['babel-polyfill', __dirname + '/src/index.js'],
+  target: 'node', // The target: 'node' option tells webpack not to touch any built-in modules like fs or path.
+  // target: 'web',
   devtool: 'source-map',
   output: {
     path: __dirname + '/lib',
@@ -32,7 +34,7 @@ const config = {
       {
         test: /(\.jsx|\.js)$/,
         loader: 'babel-loader',
-        exclude: /(node_modules|bower_components)/
+        exclude: /(node_modules)/
       },
       /*
       {
@@ -48,11 +50,13 @@ const config = {
     extensions: ['.json', '.js']
   },
   plugins,
+  /*
   node: {
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
   }
+  */
 };
 
 module.exports = config;

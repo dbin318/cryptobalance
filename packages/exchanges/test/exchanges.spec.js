@@ -7,16 +7,12 @@ chai.expect()
 
 const expect = chai.expect
 
-let summary
-
-describe('Given an instance of my Cat library', () => {
-  before(async () => {
-    summary = await getSummary({}, { usd: 1980 })
-    console.log('summary', summary, 'exchanges', exchanges, 'wallets', wallets)
-  })
-  describe('when I need the name', () => {
-    it('should return the name', () => {
-      expect(summary).not.null()
+describe('summary', () => {
+  describe('getSummary is not null', () => {
+    it('should return the name', async () => {
+      const summary = await getSummary({}, { usd: 1980 })
+      console.log('summary', summary)
+      expect(summary).to.not.be.undefined
     })
   })
 })

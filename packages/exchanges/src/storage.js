@@ -28,13 +28,3 @@ export const exchanges = {
 export const wallets = {
   ethereum,
 }
-
-export function get(key) {
-  const value = window.localStorage[key]
-  if (value) return JSON.parse(value)
-}
-
-export function set(key, value) {
-  window.localStorage[key] = JSON.stringify(value)
-}
-
