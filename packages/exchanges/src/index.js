@@ -63,11 +63,11 @@ export async function getSummary(configObject, fiatCurrencies) {
   console.log('getSummary fiatCurrencies', fiatCurrencies)
 
   const balances = await getBalances(configObject)
-  // console.log('balances', balances)
+  console.log('balances', balances)
 
   // remove currency if total balance is 0
   const normalizedBalances = normalizeBalances(balances)
-  // console.log('normalized balances', normalizedBalances)
+  console.log('normalized balances', normalizedBalances)
 
   const currencies = Object.entries(normalizedBalances)
     .map(([ currency, values ]) => currency)

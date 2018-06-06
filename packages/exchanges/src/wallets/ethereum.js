@@ -55,34 +55,33 @@ export async function balance(config) {
   // console.log('ethereum balance', config)
 
   const { address, apiKey } = config
-// async function balance() {
-  const [ ether, tokens ]  = await Promise.all([ request({
-      url: baseUrl,
-      qs: {
-        module: 'account',
-        action: 'balance',
-        address,
-        tag: 'latest',
-        apikey: apiKey
-      },
-      method: 'GET',
-      json: true
-    }), request({
-      url: baseUrl,
-      qs: {
-        module: 'account',
-        action: 'tokentx',
-        address,
-        startblock: 0,
-        endblock: 999999999,
-        sort: 'asc',
-        apikey: apiKey
-      },
-      method: 'GET',
-      json: true
-    })
-  ])
-  // console.log('ethereum wallets balance', ether, tokens)
+  const [ ether, tokens ] = await Promise.all([ request({
+    url: baseUrl,
+    qs: {
+      module: 'account',
+      action: 'balance',
+      address,
+      tag: 'latest',
+      apikey: apiKey
+    },
+    method: 'GET',
+    json: true
+  }), request({
+    url: baseUrl,
+    qs: {
+      module: 'account',
+      action: 'tokentx',
+      address,
+      startblock: 0,
+      endblock: 999999999,
+      sort: 'asc',
+      apikey: apiKey
+    },
+    method: 'GET',
+    json: true
+  })])
+
+  console.log('ethereum wallets balance', ether, tokens)
 
   const result = {}
 
@@ -92,14 +91,17 @@ export async function balance(config) {
   const { result: tokenTxList } = tokens
   if (tokenTxList) {
     tokenTxList.forEach(({ to, from, value, tokenSymbol }) => {
-      if (to.toLowerCase() === address.toLowerCase()) {
-        // increase token balance
-        if (!result[tokenSymbol.toLowerCase()]) result[tokenSymbol.toLowerCase()] = 0
-        result[tokenSymbol.toLowerCase()] += wei2ether(Number(value))
-      } else if (from.toLowerCase() === address.toLowerCase()) {
-        /// decrease token balance
-        if (!result[tokenSymbol.toLowerCase()]) result[tokenSymbol.toLowerCase()] = 0
-        result[tokenSymbol.toLowerCase()] -= wei2ether(Number(value))
+      // tokenSymbol이 ''인 경우는 skip(신규 token인 경우)
+      if (tokenSymbol) {
+        if (to.toLowerCase() === address.toLowerCase()) {
+          // increase token balance
+          if (!result[tokenSymbol.toLowerCase()]) result[tokenSymbol.toLowerCase()] = 0
+          result[tokenSymbol.toLowerCase()] += wei2ether(Number(value))
+        } else if (from.toLowerCase() === address.toLowerCase()) {
+          // decrease token balance
+          if (!result[tokenSymbol.toLowerCase()]) result[tokenSymbol.toLowerCase()] = 0
+          result[tokenSymbol.toLowerCase()] -= wei2ether(Number(value))
+        }
       }
     })
   }

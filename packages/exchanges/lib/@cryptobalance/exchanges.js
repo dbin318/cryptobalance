@@ -29985,11 +29985,12 @@ var getSummary = exports.getSummary = function () {
           case 3:
             balances = _context.sent;
 
-            // console.log('balances', balances)
+            console.log('balances', balances);
 
             // remove currency if total balance is 0
             normalizedBalances = normalizeBalances(balances);
-            // console.log('normalized balances', normalizedBalances)
+
+            console.log('normalized balances', normalizedBalances);
 
             currencies = Object.entries(normalizedBalances).map(function (_ref2) {
               var _ref3 = _slicedToArray(_ref2, 2),
@@ -30012,10 +30013,10 @@ var getSummary = exports.getSummary = function () {
             //   etc: {
             //   },
             // }
-            _context.next = 9;
+            _context.next = 11;
             return getTickers(configObject, currencies, fiatCurrencies);
 
-          case 9:
+          case 11:
             tickers = _context.sent;
             result = {};
 
@@ -30091,7 +30092,7 @@ var getSummary = exports.getSummary = function () {
 
             return _context.abrupt('return', result);
 
-          case 17:
+          case 19:
           case 'end':
             return _context.stop();
         }
@@ -54938,8 +54939,6 @@ var balance = exports.balance = function () {
             // console.log('ethereum balance', config)
 
             address = config.address, apiKey = config.apiKey;
-            // async function balance() {
-
             _context.next = 3;
             return Promise.all([(0, _requestPromise2.default)({
               url: baseUrl,
@@ -54973,7 +54972,8 @@ var balance = exports.balance = function () {
             ether = _ref3[0];
             tokens = _ref3[1];
 
-            // console.log('ethereum wallets balance', ether, tokens)
+
+            console.log('ethereum wallets balance', ether, tokens);
 
             result = {};
             etherBalance = ether.result;
@@ -54989,14 +54989,17 @@ var balance = exports.balance = function () {
                     value = _ref4.value,
                     tokenSymbol = _ref4.tokenSymbol;
 
-                if (to.toLowerCase() === address.toLowerCase()) {
-                  // increase token balance
-                  if (!result[tokenSymbol.toLowerCase()]) result[tokenSymbol.toLowerCase()] = 0;
-                  result[tokenSymbol.toLowerCase()] += (0, _base.wei2ether)(Number(value));
-                } else if (from.toLowerCase() === address.toLowerCase()) {
-                  /// decrease token balance
-                  if (!result[tokenSymbol.toLowerCase()]) result[tokenSymbol.toLowerCase()] = 0;
-                  result[tokenSymbol.toLowerCase()] -= (0, _base.wei2ether)(Number(value));
+                // tokenSymbol이 ''인 경우는 skip(신규 token인 경우)
+                if (tokenSymbol) {
+                  if (to.toLowerCase() === address.toLowerCase()) {
+                    // increase token balance
+                    if (!result[tokenSymbol.toLowerCase()]) result[tokenSymbol.toLowerCase()] = 0;
+                    result[tokenSymbol.toLowerCase()] += (0, _base.wei2ether)(Number(value));
+                  } else if (from.toLowerCase() === address.toLowerCase()) {
+                    // decrease token balance
+                    if (!result[tokenSymbol.toLowerCase()]) result[tokenSymbol.toLowerCase()] = 0;
+                    result[tokenSymbol.toLowerCase()] -= (0, _base.wei2ether)(Number(value));
+                  }
                 }
               });
             }
@@ -55005,7 +55008,7 @@ var balance = exports.balance = function () {
 
             return _context.abrupt('return', result);
 
-          case 13:
+          case 14:
           case 'end':
             return _context.stop();
         }
