@@ -22,8 +22,8 @@ export function setConfig(params) {
  */
 export function fetchConfig() {
   return async (dispatch, getState) => {
-    const config = get(STORAGE_KEY) || {}
-    const settings = get(SETTINGS_KEY) || {}
+    const config = await get(STORAGE_KEY) || {}
+    const settings = await get(SETTINGS_KEY) || {}
     // console.log('fetchConfig, config', config)
 
     dispatch(setConfigAction({ config, settings }))
@@ -39,8 +39,8 @@ export function pushConfig(params) {
   return async (dispatch, getState) => {
     const { config, settings } = params
 
-    if (config) set(STORAGE_KEY, config)
-    if (settings) set(SETTINGS_KEY, settings)
+    if (config) await set(STORAGE_KEY, config)
+    if (settings) await set(SETTINGS_KEY, settings)
 
     // console.log('pushConfig', params)
 

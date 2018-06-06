@@ -17,7 +17,7 @@ export function fetchExchangeRate() {
 
     try {
       // 1. storage를 먼저 본다.
-      let exchangeRateList = get(EXCHANGE_RATE_KEY)
+      let exchangeRateList = await get(EXCHANGE_RATE_KEY)
       console.log('fetchExchangeRate, exchangeRateList', exchangeRateList)
 
       let exchangeRate = getExchangeRateFromList(exchangeRateList)
@@ -43,7 +43,7 @@ export function fetchExchangeRate() {
         const updatedExchangeRateList = add(exchangeRateList, exchangeRate)
         console.log('exchange rate list to update', updatedExchangeRateList)
 
-        set(EXCHANGE_RATE_KEY, updatedExchangeRateList)
+        await set(EXCHANGE_RATE_KEY, updatedExchangeRateList)
 
         if (exchangeRate.date && exchangeRate.usd !== -1) {
           dispatch(createExchangeRateAction({
