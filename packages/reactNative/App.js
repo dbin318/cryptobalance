@@ -1,21 +1,38 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { createBottomTabNavigator } from 'react-navigation'
+
+import BalanceScreen from './screens/BalanceScreen'
+import ApiScreen from './screens/ApiScreen'
+import SettingsScreen from './screens/SettingsScreen'
+import AboutScreen from './screens/AboutScreen'
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Hello</Text>
-      </View>
-    );
+      <TabNavigator />
+    )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const TabNavigator = createBottomTabNavigator({
+  Balance: BalanceScreen,
+  Api: ApiScreen,
+  Settings: SettingsScreen,
+  About: AboutScreen
+}, {
+  initialRouteName: 'Balance',
+  tabBarOptions: {
+    activeTintColor: '#e91e63',
+    labelStyle: {
+      fontSize: 12,
+    },
+    style: {
+      backgroundColor: 'blue',
+    },
   },
-});
+})
