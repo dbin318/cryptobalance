@@ -14,6 +14,9 @@ import ApiScreen from './screens/ApiScreen'
 import SettingsScreen from './screens/SettingsScreen'
 import AboutScreen from './screens/AboutScreen'
 
+// https://github.com/tradle/react-native-crypto
+import './shim.js'
+
 let store
 
 async function init() {
